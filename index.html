@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Product Link Store</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        -45deg,
+        #ff0080,
+        #ff1493,
+        #ff69b4,
+        #ffc0cb
+    );
+
+    background-size:400% 400%;
+
+    animation:bgMove 12s ease infinite;
+
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+@keyframes bgMove{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
+}
+
+
+/* =========================
+   FLOATING CIRCLES
+========================= */
+
+.circle{
+
+    position:absolute;
+
+    border-radius:50%;
+
+    background:
+    rgba(255,255,255,.18);
+
+    backdrop-filter:blur(3px);
+
+    animation:floatUp linear infinite;
+
+}
+
+
+.circle:nth-child(1){
+
+    width:130px;
+    height:130px;
+
+    left:8%;
+    bottom:-150px;
+
+    animation-duration:13s;
+
+}
+
+
+.circle:nth-child(2){
+
+    width:80px;
+    height:80px;
+
+    left:70%;
+    bottom:-100px;
+
+    animation-duration:10s;
+
+}
+
+
+.circle:nth-child(3){
+
+    width:170px;
+    height:170px;
+
+    left:42%;
+    bottom:-180px;
+
+    animation-duration:17s;
+
+}
+
+
+.circle:nth-child(4){
+
+    width:60px;
+    height:60px;
+
+    left:85%;
+    bottom:-80px;
+
+    animation-duration:8s;
+
+}
+
+
+@keyframes floatUp{
+
+    0%{
+
+        transform:
+        translateY(0)
+        rotate(0deg);
+
+        opacity:0;
+
+    }
+
+    15%{
+
+        opacity:.5;
+
+    }
+
+    100%{
+
+        transform:
+        translateY(-120vh)
+        rotate(360deg);
+
+        opacity:0;
+
+    }
+
+}
+
+
+/* =========================
+   MAIN CARD
+========================= */
+
+.container{
+
+    position:relative;
+
+    z-index:10;
+
+    width:92%;
+
+    max-width:650px;
+
+    padding:50px 35px;
+
+    text-align:center;
+
+    background:
+    rgba(255,255,255,.17);
+
+    border:
+    1px solid
+    rgba(255,255,255,.35);
+
+    border-radius:30px;
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    box-shadow:
+    0 25px 70px
+    rgba(0,0,0,.20);
+
+    animation:
+    cardIn 1s ease;
+
+}
+
+
+@keyframes cardIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(50px)
+        scale(.92);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+    }
+
+}
+
+
+/* =========================
+   LOGO
+========================= */
+
+.logo{
+
+    width:90px;
+
+    height:90px;
+
+    margin:0 auto 20px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:25px;
+
+    background:
+    rgba(255,255,255,.25);
+
+    box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.15);
+
+    font-size:45px;
+
+    animation:
+    logoFloat 3s ease-in-out infinite;
+
+}
+
+
+@keyframes logoFloat{
+
+    0%,
+    100%{
+
+        transform:
+        translateY(0);
+
+    }
+
+    50%{
+
+        transform:
+        translateY(-8px);
+
+    }
+
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+h1{
+
+    color:white;
+
+    font-size:
+    clamp(
+        30px,
+        7vw,
+        48px
+    );
+
+    margin-bottom:12px;
+
+    text-shadow:
+    0 5px 25px
+    rgba(0,0,0,.18);
+
+}
+
+
+/* =========================
+   SUBTITLE
+========================= */
+
+.subtitle{
+
+    color:white;
+
+    font-size:18px;
+
+    line-height:1.6;
+
+    margin-bottom:32px;
+
+    opacity:.95;
+
+}
+
+
+/* =========================
+   FEATURES
+========================= */
+
+.features{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:32px;
+
+}
+
+
+.feature{
+
+    padding:9px 14px;
+
+    border-radius:30px;
+
+    background:
+    rgba(255,255,255,.18);
+
+    color:white;
+
+    font-size:13px;
+
+    border:
+    1px solid
+    rgba(255,255,255,.25);
+
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn{
+
+    position:relative;
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    min-width:230px;
+
+    padding:17px 30px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:
+    linear-gradient(
+        45deg,
+        #ff0080,
+        #ff1493
+    );
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 10px 35px
+    rgba(255,0,128,.45);
+
+    transition:
+    transform .3s,
+    box-shadow .3s;
+
+}
+
+
+.btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-120%;
+
+    width:80%;
+
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.5),
+        transparent
+    );
+
+    transform:skewX(-25deg);
+
+    animation:
+    shine 3s infinite;
+
+}
+
+
+@keyframes shine{
+
+    0%{
+        left:-120%;
+    }
+
+    45%{
+        left:140%;
+    }
+
+    100%{
+        left:140%;
+    }
+
+}
+
+
+.btn:hover{
+
+    transform:
+    translateY(-4px)
+    scale(1.04);
+
+    box-shadow:
+    0 15px 45px
+    rgba(255,0,128,.65);
+
+}
+
+
+.btn:active{
+
+    transform:
+    scale(.96);
+
+}
+
+
+/* =========================
+   FOOTER TEXT
+========================= */
+
+.footer{
+
+    margin-top:25px;
+
+    color:white;
+
+    font-size:13px;
+
+    opacity:.8;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .container{
+
+        padding:40px 20px;
+
+        border-radius:25px;
+
+    }
+
+
+    .logo{
+
+        width:75px;
+
+        height:75px;
+
+        font-size:38px;
+
+    }
+
+
+    .subtitle{
+
+        font-size:15px;
+
+    }
+
+
+    .btn{
+
+        width:100%;
+
+        min-width:0;
+
+        font-size:16px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- FLOATING BACKGROUND -->
+
+<div class="circle"></div>
+
+<div class="circle"></div>
+
+<div class="circle"></div>
+
+<div class="circle"></div>
+
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <div class="logo">
+
+        🛍️
+
+    </div>
+
+
+    <h1>
+
+        Product Link Store
+
+    </h1>
+
+
+    <p class="subtitle">
+
+        Discover amazing products,
+        shop easily and pay securely.
+
+    </p>
+
+
+    <div class="features">
+
+        <span class="feature">
+            ✨ Quality Products
+        </span>
+
+        <span class="feature">
+            🔒 Secure Payment
+        </span>
+
+        <span class="feature">
+            🚚 Easy Shopping
+        </span>
+
+    </div>
+
+
+    <button
+        class="btn"
+        onclick="openStore()"
+    >
+
+        🛒 Explore Products
+
+    </button>
+
+
+    <div class="footer">
+
+        Shop Smart • Pay Securely
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+function openStore(){
+
+    document.body.style.transition =
+        "opacity .5s ease, transform .5s ease";
+
+
+    document.body.style.opacity =
+        "0";
+
+
+    document.body.style.transform =
+        "scale(1.04)";
+
+
+    setTimeout(function(){
+
+        window.location.href =
+            "products.html";
+
+    },500);
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

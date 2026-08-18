@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Link Store</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f7f7f7;
+    color:#222;
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:white;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+}
+
+.top{
+    width:94%;
+    max-width:1250px;
+    margin:auto;
+    padding:15px 0;
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.logo{
+    color:#ff0080;
+    font-size:24px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.search{
+    flex:1;
+    padding:13px 18px;
+    border:1px solid #ddd;
+    border-radius:30px;
+    outline:none;
+    font-size:15px;
+}
+
+.sort{
+    padding:12px 15px;
+    border:1px solid #ddd;
+    border-radius:25px;
+    background:white;
+}
+
+.categories{
+    overflow-x:auto;
+    scrollbar-width:none;
+    border-top:1px solid #eee;
+}
+
+.categories::-webkit-scrollbar{
+    display:none;
+}
+
+.category-list{
+    width:max-content;
+    min-width:100%;
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    padding:10px 15px;
+}
+
+.category{
+    border:none;
+    background:#f4f4f4;
+    padding:10px 17px;
+    border-radius:25px;
+    white-space:nowrap;
+    cursor:pointer;
+}
+
+.category.active{
+    background:#ff0080;
+    color:white;
+}
+
+.heading{
+    width:94%;
+    max-width:1250px;
+    margin:25px auto 15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.heading h1{
+    font-size:26px;
+}
+
+.count{
+    color:#777;
+    font-size:13px;
+}
+
+.products{
+    width:94%;
+    max-width:1250px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    gap:18px;
+    padding-bottom:30px;
+}
+
+.card{
+    background:white;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    animation:show .35s ease both;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 30px rgba(0,0,0,.14);
+}
+
+@keyframes show{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.image-box{
+    position:relative;
+    height:230px;
+    background:#f1f1f1;
+    overflow:hidden;
+}
+
+.product-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.card:hover .product-image{
+    transform:scale(1.06);
+}
+
+.discount{
+    position:absolute;
+    top:10px;
+    left:10px;
+    z-index:2;
+    background:#ff0080;
+    color:white;
+    padding:6px 10px;
+    border-radius:5px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.info{
+    padding:14px;
+}
+
+.name{
+    font-size:16px;
+    font-weight:bold;
+    margin-bottom:6px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.category-name{
+    font-size:12px;
+    color:#888;
+    margin-bottom:8px;
+}
+
+.description{
+    color:#666;
+    font-size:12px;
+    height:32px;
+    overflow:hidden;
+    margin-bottom:10px;
+}
+
+.price-row{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.price{
+    color:#ff0080;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.old-price{
+    color:#999;
+    font-size:12px;
+    text-decoration:line-through;
+}
+
+.buy{
+    width:100%;
+    border:none;
+    padding:12px;
+    border-radius:25px;
+    background:linear-gradient(45deg,#ff0080,#ff1493);
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.loader{
+    text-align:center;
+    padding:25px;
+    color:#777;
+}
+
+.spinner{
+    width:35px;
+    height:35px;
+    margin:0 auto 10px;
+    border:4px solid #eee;
+    border-top-color:#ff0080;
+    border-radius:50%;
+    animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.end{
+    text-align:center;
+    padding:30px;
+    color:#999;
+}
+
+@media(max-width:650px){
+
+    .top{
+        flex-wrap:wrap;
+    }
+
+    .logo{
+        width:100%;
+        text-align:center;
+    }
+
+    .search{
+        width:100%;
+        flex:none;
+    }
+
+    .sort{
+        width:100%;
+    }
+
+    .category-list{
+        justify-content:flex-start;
+    }
+
+    .products{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+
+    .image-box{
+        height:170px;
+    }
+
+    .info{
+        padding:10px;
+    }
+
+    .name{
+        font-size:14px;
+    }
+
+    .price{
+        font-size:17px;
+    }
+
+    .buy{
+        font-size:13px;
+        padding:10px 5px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="top">
+
+<div class="logo">
+🛍️ Product Link
+</div>
+
+<input
+id="search"
+class="search"
+type="text"
+placeholder="🔍 Search products..."
+>
+
+<select id="sort" class="sort">
+
+<option value="default">Sort</option>
+<option value="low">Price: Low to High</option>
+<option value="high">Price: High to Low</option>
+
+</select>
+
+</div>
+
+<div class="categories">
+<div id="categoryList" class="category-list"></div>
+</div>
+
+</header>
+
+<div class="heading">
+
+<h1 id="title">
+All Products
+</h1>
+
+<span id="count" class="count">
+11,00,000 Products
+</span>
+
+</div>
+
+<div id="products" class="products"></div>
+
+<div id="loader" class="loader">
+
+<div class="spinner"></div>
+
+Loading more products...
+
+</div>
+
+<div id="end" class="end" style="display:none;">
+You reached the end.
+</div>
+
+
+<script>
+
+/* ============================
+   SETTINGS
+============================ */
+
+const PRODUCTS_PER_CATEGORY = 100000;
+
+const TOTAL_PRODUCTS = 1100000;
+
+const PRODUCTS_PER_LOAD = 24;
+
+
+/* ============================
+   CATEGORIES
+============================ */
+
+const categories = [
+
+"All",
+"Women",
+"Men",
+"Kids",
+"Beauty",
+"Footwear",
+"Electronics",
+"Home & Kitchen",
+"Bags",
+"Jewellery",
+"Sports",
+"Accessories"
+
+];
+
+
+/* ============================
+   PRODUCT NAMES
+============================ */
+
+const names = {
+
+"Women":[
+"Elegant Women Dress",
+"Stylish Kurti",
+"Women Handbag",
+"Women Saree",
+"Fashion Top",
+"Designer Dress",
+"Women Jeans",
+"Party Wear Dress",
+"Casual Women Top",
+"Printed Kurti"
+],
+
+"Men":[
+"Men Casual Shirt",
+"Premium T-Shirt",
+"Men Jeans",
+"Formal Shirt",
+"Men Jacket",
+"Classic Kurta",
+"Men Track Pant",
+"Men Hoodie",
+"Men Polo Shirt",
+"Men Casual Wear"
+],
+
+"Kids":[
+"Kids Dress",
+"Kids T-Shirt",
+"Kids Shoes",
+"Kids Toy",
+"School Bag",
+"Kids Fashion Set",
+"Kids Jeans",
+"Kids Jacket",
+"Kids Cap",
+"Kids School Set"
+],
+
+"Beauty":[
+"Face Care Kit",
+"Beauty Set",
+"Skin Care Product",
+"Makeup Kit",
+"Hair Care Kit",
+"Beauty Accessories",
+"Face Wash",
+"Moisturizer",
+"Lip Care Kit",
+"Beauty Combo"
+],
+
+"Footwear":[
+"Running Shoes",
+"Casual Shoes",
+"Women Sandals",
+"Sports Shoes",
+"Fashion Slippers",
+"Premium Sneakers",
+"Walking Shoes",
+"Party Sandals",
+"Men Slippers",
+"Kids Shoes"
+],
+
+"Electronics":[
+"Wireless Earbuds",
+"Smart Watch",
+"Bluetooth Speaker",
+"Mobile Accessories",
+"USB Charger",
+"LED Light",
+"Power Bank",
+"Charging Cable",
+"Mini Speaker",
+"Phone Stand"
+],
+
+"Home & Kitchen":[
+"Kitchen Organizer",
+"Storage Box",
+"Home Decor",
+"Water Bottle",
+"Kitchen Tool",
+"Cleaning Product",
+"Food Container",
+"Kitchen Rack",
+"Wall Decor",
+"Home Storage"
+],
+
+"Bags":[
+"Travel Bag",
+"School Backpack",
+"Hand Bag",
+"Laptop Bag",
+"Sling Bag",
+"Shopping Bag",
+"College Backpack",
+"Travel Backpack",
+"Fashion Bag",
+"Office Bag"
+],
+
+"Jewellery":[
+"Fashion Necklace",
+"Jewellery Set",
+"Earrings",
+"Bracelet",
+"Ring",
+"Fashion Chain",
+"Pendant",
+"Anklet",
+"Jewellery Combo",
+"Fashion Jewellery"
+],
+
+"Sports":[
+"Sports Bottle",
+"Gym Gloves",
+"Yoga Mat",
+"Fitness Band",
+"Sports Bag",
+"Exercise Equipment",
+"Skipping Rope",
+"Gym Belt",
+"Workout Accessories",
+"Fitness Kit"
+],
+
+"Accessories":[
+"Fashion Watch",
+"Sunglasses",
+"Wallet",
+"Cap",
+"Belt",
+"Mobile Cover",
+"Keychain",
+"Hair Accessories",
+"Fashion Combo",
+"Travel Accessories"
+]
+
+};
+
+
+/* ============================
+   IMAGE TYPES
+============================ */
+
+const imageTypes = {
+
+"Women":"fashion dress women",
+"Men":"men fashion shirt",
+"Kids":"kids fashion",
+"Beauty":"beauty makeup",
+"Footwear":"shoes footwear",
+"Electronics":"electronics gadget",
+"Home & Kitchen":"kitchen home",
+"Bags":"fashion bag",
+"Jewellery":"jewellery",
+"Sports":"sports fitness",
+"Accessories":"fashion accessories"
+
+};
+
+
+/* ============================
+   STATE
+============================ */
+
+let selectedCategory = "All";
+
+let searchText = "";
+
+let sortType = "default";
+
+let loaded = 0;
+
+let loading = false;
+
+
+/* ============================
+   CATEGORY BUTTONS
+============================ */
+
+const categoryList =
+document.getElementById("categoryList");
+
+categories.forEach(function(category,index){
+
+    const button =
+    document.createElement("button");
+
+    button.className="category";
+
+    if(index===0){
+        button.classList.add("active");
+    }
+
+    button.textContent=category;
+
+    button.onclick=function(){
+
+        selectedCategory=category;
+
+        document
+        .querySelectorAll(".category")
+        .forEach(
+            b=>b.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        loaded=0;
+
+        document
+        .getElementById("products")
+        .innerHTML="";
+
+        document
+        .getElementById("end")
+        .style.display="none";
+
+        document
+        .getElementById("title")
+        .textContent=
+        category==="All"
+        ?"All Products"
+        :category;
+
+        loadProducts();
+
+    };
+
+    categoryList.appendChild(button);
+
+});
+
+
+/* ============================
+   GET CATEGORY
+============================ */
+
+function getCategory(id){
+
+    const list =
+    categories.slice(1);
+
+    return list[
+        Math.floor((id-1) /
+        PRODUCTS_PER_CATEGORY)
+    % list.length];
+
+}
+
+
+/* ============================
+   CATEGORY PRODUCT NUMBER
+============================ */
+
+function getCategoryProductNumber(id){
+
+    return (
+        ((id-1) %
+        PRODUCTS_PER_CATEGORY)
+        +1
+    );
+
+}
+
+
+/* ============================
+   PRODUCT NAME
+============================ */
+
+function getProductName(id){
+
+    const category =
+    getCategory(id);
+
+    const list =
+    names[category];
+
+    const number =
+    getCategoryProductNumber(id);
+
+    return (
+        list[
+            (number-1) %
+            list.length
+        ]
+        +" #"
+        +number
+    );
+
+}
+
+
+/* ============================
+   IMAGE
+============================ */
+
+function getProductImage(id){
+
+    const category =
+    getCategory(id);
+
+    const productNumber =
+    getCategoryProductNumber(id);
+
+    const type =
+    imageTypes[category];
+
+    return (
+        "https://placehold.co/700x700/ff69b4/ffffff?text="
+        +
+        encodeURIComponent(
+            type+
+            " "+productNumber
+        )
+    );
+
+}
+
+
+/* ============================
+   PRODUCT
+============================ */
+
+function createProduct(id){
+
+    const category =
+    getCategory(id);
+
+    const productNumber =
+    getCategoryProductNumber(id);
+
+    /*
+       Selling price:
+       ₹100 - ₹500
+    */
+
+    const price =
+    100+
+    ((id*37)%401);
+
+
+    /*
+       Old price:
+       ₹500 - ₹1000
+    */
+
+    const oldPrice =
+    500+
+    ((id*53)%501);
+
+
+    /*
+       Discount
+    */
+
+    let discount =
+    Math.round(
+        ((oldPrice-price)/
+        oldPrice)*100
+    );
+
+    if(discount<5){
+        discount=5;
+    }
+
+    return {
+
+        id:id,
+
+        name:
+        getProductName(id),
+
+        category:category,
+
+        price:price,
+
+        oldPrice:oldPrice,
+
+        discount:
+        discount+"% OFF",
+
+        description:
+        "Premium quality "+
+        category.toLowerCase()+
+        " product.",
+
+        image:
+        getProductImage(id)
+
+    };
+
+}
+
+
+/* ============================
+   FILTER
+============================ */
+
+function matches(product){
+
+    const categoryOK =
+    selectedCategory==="All"
+    ||
+    product.category===
+    selectedCategory;
+
+    const searchOK =
+    product.name
+    .toLowerCase()
+    .includes(searchText);
+
+    return categoryOK && searchOK;
+
+}
+
+
+/* ============================
+   NEXT PRODUCTS
+============================ */
+
+function getNextProducts(){
+
+    const result=[];
+
+    while(
+        result.length<
+        PRODUCTS_PER_LOAD
+        &&
+        loaded<
+        TOTAL_PRODUCTS
+    ){
+
+        loaded++;
+
+        const product =
+        createProduct(loaded);
+
+        if(matches(product)){
+            result.push(product);
+        }
+
+    }
+
+    return result;
+
+}
+
+
+/* ============================
+   DISPLAY
+============================ */
+
+function displayProduct(product){
+
+    const card =
+    document.createElement("div");
+
+    card.className="card";
+
+    card.innerHTML=`
+
+        <div class="image-box">
+
+            <span class="discount">
+                ${product.discount}
+            </span>
+
+            <img
+                class="product-image"
+                src="${product.image}"
+                alt="${product.name}"
+                loading="lazy"
+            >
+
+        </div>
+
+        <div class="info">
+
+            <div class="name">
+                ${product.name}
+            </div>
+
+            <div class="category-name">
+                ${product.category}
+            </div>
+
+            <div class="description">
+                ${product.description}
+            </div>
+
+            <div class="price-row">
+
+                <span class="price">
+                    ₹${product.price}
+                </span>
+
+                <span class="old-price">
+                    ₹${product.oldPrice}
+                </span>
+
+            </div>
+
+            <button
+                class="buy"
+                onclick="buyProduct(${product.id})"
+            >
+                🛒 Buy Now
+            </button>
+
+        </div>
+    `;
+
+    document
+    .getElementById("products")
+    .appendChild(card);
+
+}
+
+
+/* ============================
+   LOAD PRODUCTS
+============================ */
+
+function loadProducts(){
+
+    if(loading) return;
+
+    if(loaded>=TOTAL_PRODUCTS){
+        return;
+    }
+
+    loading=true;
+
+    const loader =
+    document.getElementById("loader");
+
+    loader.style.display="block";
+
+    setTimeout(function(){
+
+        const products =
+        getNextProducts();
+
+        /*
+           Sorting
+        */
+
+        if(sortType==="low"){
+
+            products.sort(
+                (a,b)=>
+                a.price-b.price
+            );
+
+        }
+
+        if(sortType==="high"){
+
+            products.sort(
+                (a,b)=>
+                b.price-a.price
+            );
+
+        }
+
+        products.forEach(
+            displayProduct
+        );
+
+        loader.style.display="none";
+
+        loading=false;
+
+        if(
+            loaded>=TOTAL_PRODUCTS
+        ){
+
+            document
+            .getElementById("end")
+            .style.display="block";
+
+        }
+
+    },150);
+
+}
+
+
+/* ============================
+   SEARCH
+============================ */
+
+document
+.getElementById("search")
+.addEventListener(
+"input",
+function(){
+
+    searchText =
+    this.value
+    .toLowerCase()
+    .trim();
+
+    loaded=0;
+
+    document
+    .getElementById("products")
+    .innerHTML="";
+
+    document
+    .getElementById("end")
+    .style.display="none";
+
+    loadProducts();
+
+});
+
+
+/* ============================
+   SORT
+============================ */
+
+document
+.getElementById("sort")
+.addEventListener(
+"change",
+function(){
+
+    sortType=this.value;
+
+    loaded=0;
+
+    document
+    .getElementById("products")
+    .innerHTML="";
+
+    document
+    .getElementById("end")
+    .style.display="none";
+
+    loadProducts();
+
+});
+
+
+/* ============================
+   INFINITE SCROLL
+============================ */
+
+window.addEventListener(
+"scroll",
+function(){
+
+    if(
+        window.innerHeight+
+        window.scrollY
+        >=
+        document.body.offsetHeight-
+        800
+    ){
+
+        loadProducts();
+
+    }
+
+});
+
+
+/* ============================
+   BUY
+============================ */
+
+function buyProduct(id){
+
+    const product =
+    createProduct(id);
+
+    localStorage.setItem(
+        "selectedProduct",
+        JSON.stringify(product)
+    );
+
+    window.location.href =
+    "product.html?id="+id;
+
+}
+
+
+/* ============================
+   START
+============================ */
+
+loadProducts();
+
+</script>
+
+</body>
+</html>

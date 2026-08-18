@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Product Link Admin</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+color:#222;
+}
+
+.header{
+background:white;
+padding:16px;
+box-shadow:0 3px 15px rgba(0,0,0,.08);
+position:sticky;
+top:0;
+z-index:10;
+}
+
+.header-inner{
+max-width:1200px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#ff0080;
+}
+
+.store-btn{
+border:0;
+background:#ff0080;
+color:white;
+padding:10px 18px;
+border-radius:25px;
+font-weight:bold;
+}
+
+.container{
+width:94%;
+max-width:1200px;
+margin:25px auto;
+}
+
+.form-box{
+background:white;
+padding:22px;
+border-radius:18px;
+box-shadow:0 5px 20px rgba(0,0,0,.07);
+margin-bottom:25px;
+}
+
+.form-box h2{
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+.field{
+display:flex;
+flex-direction:column;
+}
+
+.field label{
+font-size:13px;
+font-weight:bold;
+margin-bottom:7px;
+}
+
+.field input,
+.field select,
+.field textarea{
+padding:13px;
+border:1px solid #ddd;
+border-radius:10px;
+outline:none;
+}
+
+.full{
+grid-column:1/-1;
+}
+
+textarea{
+min-height:90px;
+resize:vertical;
+}
+
+.upload{
+border:2px dashed #ff0080;
+border-radius:15px;
+padding:25px;
+text-align:center;
+background:#fff7fb;
+cursor:pointer;
+}
+
+.upload input{
+display:none;
+}
+
+.upload-icon{
+font-size:40px;
+}
+
+.upload-text{
+color:#ff0080;
+font-weight:bold;
+margin-top:8px;
+}
+
+.preview{
+display:none;
+width:180px;
+height:180px;
+object-fit:cover;
+border-radius:15px;
+margin:15px auto 0;
+}
+
+.buttons{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
+
+.add{
+border:0;
+background:#ff0080;
+color:white;
+padding:13px 25px;
+border-radius:25px;
+font-weight:bold;
+}
+
+.cancel{
+border:0;
+background:#eee;
+padding:13px 25px;
+border-radius:25px;
+}
+
+.progress{
+display:none;
+margin-top:15px;
+}
+
+.progress-bar{
+height:8px;
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+}
+
+.progress-fill{
+height:100%;
+width:0%;
+background:#ff0080;
+}
+
+.search{
+width:100%;
+padding:14px 18px;
+border:1px solid #ddd;
+border-radius:25px;
+margin-bottom:20px;
+outline:none;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+gap:18px;
+}
+
+.card{
+background:white;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.card img{
+width:100%;
+height:210px;
+object-fit:cover;
+}
+
+.info{
+padding:14px;
+}
+
+.name{
+font-weight:bold;
+margin-bottom:5px;
+}
+
+.cat{
+font-size:12px;
+color:#888;
+margin-bottom:8px;
+}
+
+.price{
+font-size:20px;
+font-weight:bold;
+color:#ff0080;
+}
+
+.old{
+font-size:12px;
+color:#999;
+text-decoration:line-through;
+margin-left:6px;
+}
+
+.discount{
+display:inline-block;
+margin-top:8px;
+background:#ffe6f2;
+color:#ff0080;
+padding:5px 8px;
+border-radius:5px;
+font-size:11px;
+font-weight:bold;
+}
+
+.actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin-top:12px;
+}
+
+.edit,
+.delete,
+.share{
+border:0;
+padding:10px;
+border-radius:20px;
+font-weight:bold;
+}
+
+.edit{
+background:#111;
+color:white;
+}
+
+.delete{
+background:#ffe5e5;
+color:#d00000;
+}
+
+.share{
+width:100%;
+margin-top:8px;
+background:#25D366;
+color:white;
+}
+
+.empty{
+background:white;
+padding:40px;
+text-align:center;
+border-radius:15px;
+color:#888;
+}
+
+@media(max-width:650px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.full{
+grid-column:auto;
+}
+
+.products{
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
+
+.card img{
+height:160px;
+}
+
+.info{
+padding:10px;
+}
+
+.actions{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+<div class="header-inner">
+
+<div class="logo">
+🛍️ Product Link Admin
+</div>
+
+<button
+class="store-btn"
+onclick="location.href='products.html'"
+>
+View Store
+</button>
+
+</div>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="form-box">
+
+<h2 id="formTitle">
+➕ Add Product
+</h2>
+
+
+<div class="grid">
+
+
+<div class="field">
+
+<label>Product Name</label>
+
+<input
+id="name"
+type="text"
+placeholder="Product name"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Category</label>
+
+<select id="category">
+
+<option>Women</option>
+<option>Men</option>
+<option>Kids</option>
+<option>Beauty</option>
+<option>Footwear</option>
+<option>Electronics</option>
+<option>Home & Kitchen</option>
+<option>Bags</option>
+<option>Jewellery</option>
+<option>Sports</option>
+<option>Accessories</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Selling Price ₹100 - ₹500</label>
+
+<input
+id="price"
+type="number"
+min="100"
+max="500"
+placeholder="500"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Old Price ₹500 - ₹1000</label>
+
+<input
+id="oldPrice"
+type="number"
+min="500"
+max="1000"
+placeholder="800"
+>
+
+</div>
+
+
+<div class="field full">
+
+<label>Product Image</label>
+
+<label class="upload">
+
+<input
+id="imageFile"
+type="file"
+accept="image/*"
+>
+
+<div class="upload-icon">
+📷
+</div>
+
+<div class="upload-text">
+Select Image From Gallery
+</div>
+
+<div style="font-size:12px;color:#888;margin-top:5px">
+Tap here and choose product photo
+</div>
+
+<img
+id="preview"
+class="preview"
+>
+
+</label>
+
+</div>
+
+
+<div class="field full">
+
+<label>Description</label>
+
+<textarea
+id="description"
+placeholder="Product description"
+></textarea>
+
+</div>
+
+</div>
+
+
+<div class="progress" id="progress">
+
+<div style="font-size:12px;margin-bottom:5px">
+Uploading image...
+</div>
+
+<div class="progress-bar">
+
+<div
+id="progressFill"
+class="progress-fill"
+></div>
+
+</div>
+
+</div>
+
+
+<div class="buttons">
+
+<button
+id="saveBtn"
+class="add"
+onclick="saveProduct()"
+>
+➕ Add Product
+</button>
+
+<button
+class="cancel"
+onclick="clearForm()"
+>
+Cancel
+</button>
+
+</div>
+
+</div>
+
+
+<input
+id="search"
+class="search"
+placeholder="🔍 Search products..."
+oninput="displayProducts()"
+>
+
+
+<div
+id="products"
+class="products"
+></div>
+
+
+</div>
+
+
+<script type="module">
+
+
+/* =========================
+   FIREBASE
+========================= */
+
+import {
+initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+getFirestore,
+collection,
+addDoc,
+getDocs,
+doc,
+updateDoc,
+deleteDoc
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+import {
+getStorage,
+ref,
+uploadBytesResumable,
+getDownloadURL,
+deleteObject
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
+
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAtTHmidr36w98gTqGcaNOtjjckjVAi6IQ",
+
+authDomain:
+"productlinkstore.firebaseapp.com",
+
+projectId:
+"productlinkstore",
+
+storageBucket:
+"productlinkstore.firebasestorage.app",
+
+messagingSenderId:
+"34328657962",
+
+appId:
+"1:34328657962:web:d7134adc09e1dcef120353",
+
+measurementId:
+"G-00WJ4YMDPT"
+
+};
+
+
+const app=
+initializeApp(firebaseConfig);
+
+
+const db=
+getFirestore(app);
+
+
+const storage=
+getStorage(app);
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let products=[];
+
+let editId=null;
+
+let oldImage="";
+
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
+document
+.getElementById("imageFile")
+.addEventListener(
+"change",
+function(){
+
+const file=this.files[0];
+
+if(!file)return;
+
+if(file.size>5*1024*1024){
+
+alert(
+"Image 5 MB पेक्षा कमी असावी."
+);
+
+this.value="";
+
+return;
+
+}
+
+const reader=
+new FileReader();
+
+reader.onload=function(e){
+
+const img=
+document.getElementById(
+"preview"
+);
+
+img.src=e.target.result;
+
+img.style.display="block";
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+
+/* =========================
+   LOAD PRODUCTS
+========================= */
+
+async function loadProducts(){
+
+try{
+
+const snapshot=
+await getDocs(
+collection(
+db,
+"products"
+)
+);
+
+products=[];
+
+snapshot.forEach(
+function(item){
+
+products.push({
+
+id:item.id,
+
+...item.data()
+
+});
+
+});
+
+displayProducts();
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(
+"Products load झाले नाहीत. Firebase settings तपासा."
+);
+
+}
+
+}
+
+
+/* =========================
+   DISPLAY
+========================= */
+
+function displayProducts(){
+
+const container=
+document.getElementById(
+"products"
+);
+
+const search=
+document.getElementById(
+"search"
+)
+.value
+.toLowerCase()
+.trim();
+
+
+const filtered=
+products.filter(
+p =>
+p.name
+.toLowerCase()
+.includes(search)
+);
+
+
+container.innerHTML="";
+
+
+if(filtered.length===0){
+
+container.innerHTML=`
+
+<div class="empty">
+
+<h3>
+No products found
+</h3>
+
+<p>
+Add your first product.
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+filtered.forEach(
+function(product){
+
+const card=
+document.createElement(
+"div"
+);
+
+card.className="card";
+
+
+card.innerHTML=`
+
+<img
+src="${product.image}"
+alt="${product.name}"
+>
+
+
+<div class="info">
+
+<div class="name">
+${product.name}
+</div>
+
+<div class="cat">
+${product.category}
+</div>
+
+<span class="price">
+₹${product.price}
+</span>
+
+<span class="old">
+₹${product.oldPrice}
+</span>
+
+<br>
+
+<div class="discount">
+${product.discount}
+</div>
+
+
+<div class="actions">
+
+<button
+class="edit"
+onclick="
+editProduct('${product.id}')
+"
+>
+✏️ Edit
+</button>
+
+<button
+class="delete"
+onclick="
+deleteProduct('${product.id}')
+"
+>
+🗑️ Delete
+</button>
+
+</div>
+
+
+<button
+class="share"
+onclick="
+shareProduct('${product.id}')
+"
+>
+🔗 Share Product
+</button>
+
+
+</div>
+
+`;
+
+
+container.appendChild(card);
+
+});
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
+
+window.saveProduct=
+async function(){
+
+const name=
+document
+.getElementById("name")
+.value
+.trim();
+
+
+const category=
+document
+.getElementById("category")
+.value;
+
+
+const price=
+Number(
+document
+.getElementById("price")
+.value
+);
+
+
+const oldPrice=
+Number(
+document
+.getElementById("oldPrice")
+.value
+);
+
+
+const description=
+document
+.getElementById("description")
+.value
+.trim();
+
+
+const file=
+document
+.getElementById("imageFile")
+.files[0];
+
+
+if(!name){
+
+alert(
+"Product name टाका."
+);
+
+return;
+
+}
+
+
+if(price<100||price>500){
+
+alert(
+"Selling price ₹100 ते ₹500 मध्ये असावा."
+);
+
+return;
+
+}
+
+
+if(oldPrice<500||oldPrice>1000){
+
+alert(
+"Old price ₹500 ते ₹1000 मध्ये असावा."
+);
+
+return;
+
+}
+
+
+if(editId===null&&!file){
+
+alert(
+"Gallery मधून image select करा."
+);
+
+return;
+
+}
+
+
+if(!description){
+
+alert(
+"Description टाका."
+);
+
+return;
+
+}
+
+
+const discount=
+Math.round(
+((oldPrice-price)/
+oldPrice)*100
+);
+
+
+const button=
+document.getElementById(
+"saveBtn"
+);
+
+button.disabled=true;
+
+button.textContent=
+"Saving...";
+
+
+try{
+
+let imageURL=
+oldImage;
+
+
+/* =====================
+   IMAGE UPLOAD
+===================== */
+
+if(file){
+
+const fileName=
+Date.now()+"_"+file.name;
+
+const imageRef=
+ref(
+storage,
+"products/"+fileName
+);
+
+
+const uploadTask=
+uploadBytesResumable(
+imageRef,
+file
+);
+
+
+imageURL=
+await new Promise(
+function(resolve,reject){
+
+uploadTask.on(
+
+"state_changed",
+
+function(snapshot){
+
+const percent=
+(
+snapshot.bytesTransferred/
+snapshot.totalBytes
+)*100;
+
+
+document
+.getElementById(
+"progress"
+)
+.style.display=
+"block";
+
+
+document
+.getElementById(
+"progressFill"
+)
+.style.width=
+percent+"%";
+
+},
+
+function(error){
+
+reject(error);
+
+},
+
+async function(){
+
+const url=
+await getDownloadURL(
+uploadTask.snapshot.ref
+);
+
+resolve(url);
+
+}
+
+);
+
+});
+
+}
+
+
+/* =====================
+   DATA
+===================== */
+
+const data={
+
+name:name,
+
+category:category,
+
+price:price,
+
+oldPrice:oldPrice,
+
+discount:
+discount+"% OFF",
+
+description:
+description,
+
+image:
+imageURL,
+
+updatedAt:
+new Date().toISOString()
+
+};
+
+
+/* =====================
+   UPDATE
+===================== */
+
+if(editId){
+
+await updateDoc(
+
+doc(
+db,
+"products",
+editId
+),
+
+data
+
+);
+
+alert(
+"✅ Product updated!"
+);
+
+}
+
+
+/* =====================
+   ADD
+===================== */
+
+else{
+
+await addDoc(
+
+collection(
+db,
+"products"
+),
+
+{
+
+...data,
+
+createdAt:
+new Date().toISOString()
+
+}
+
+);
+
+alert(
+"✅ Product added!"
+);
+
+}
+
+
+clearForm();
+
+await loadProducts();
+
+}
+
+catch(error){
+
+console.error(error);
+
+alert(
+"Error: "+
+error.message
+);
+
+}
+
+
+button.disabled=false;
+
+button.textContent=
+"➕ Add Product";
+
+
+document
+.getElementById(
+"progress"
+)
+.style.display=
+"none";
+
+};
+
+
+/* =========================
+   EDIT
+========================= */
+
+window.editProduct=
+function(id){
+
+const product=
+products.find(
+p=>p.id===id
+);
+
+if(!product)return;
+
+
+editId=id;
+
+oldImage=
+product.image;
+
+
+document
+.getElementById("name")
+.value=
+product.name;
+
+
+document
+.getElementById("category")
+.value=
+product.category;
+
+
+document
+.getElementById("price")
+.value=
+product.price;
+
+
+document
+.getElementById("oldPrice")
+.value=
+product.oldPrice;
+
+
+document
+.getElementById("description")
+.value=
+product.description;
+
+
+document
+.getElementById("preview")
+.src=
+product.image;
+
+
+document
+.getElementById("preview")
+.style.display=
+"block";
+
+
+document
+.getElementById("formTitle")
+.textContent=
+"✏️ Edit Product";
+
+
+document
+.getElementById("saveBtn")
+.textContent=
+"💾 Update Product";
+
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+};
+
+
+/* =========================
+   DELETE
+========================= */
+
+window.deleteProduct=
+async function(id){
+
+if(
+!confirm(
+"हा product delete करायचा आहे का?"
+)
+)return;
+
+
+try{
+
+await deleteDoc(
+
+doc(
+db,
+"products",
+id
+)
+
+);
+
+
+products=
+products.filter(
+p=>p.id!==id
+);
+
+
+displayProducts();
+
+
+alert(
+"✅ Product deleted!"
+);
+
+}
+
+catch(error){
+
+alert(
+"Delete error: "+
+error.message
+);
+
+}
+
+};
+
+
+/* =========================
+   SHARE
+========================= */
+
+window.shareProduct=
+async function(id){
+
+const product=
+products.find(
+p=>p.id===id
+);
+
+if(!product)return;
+
+
+/*
+   IMPORTANT:
+   product.html तुमच्या
+   store च्या same folder मध्ये
+   असावे.
+*/
+
+const link=
+new URL(
+"product.html?id="+id,
+window.location.href
+).href;
+
+
+const text=
+"🛍️ "+product.name+
+"\n💰 Price: ₹"+product.price+
+"\n🔥 "+product.discount+
+"\n\n🔗 Buy Now:\n"+link;
+
+
+if(
+navigator.share
+){
+
+try{
+
+await navigator.share({
+
+title:
+product.name,
+
+text:
+text,
+
+url:
+link
+
+});
+
+}
+catch(error){
+
+console.log(error);
+
+}
+
+}
+
+else{
+
+try{
+
+await navigator
+.clipboard
+.writeText(link);
+
+alert(
+"✅ Product link copied!"
+);
+
+}
+catch(error){
+
+prompt(
+"Copy Product Link:",
+link
+);
+
+}
+
+}
+
+};
+
+
+/* =========================
+   CLEAR
+========================= */
+
+window.clearForm=
+function(){
+
+editId=null;
+
+oldImage="";
+
+
+document
+.getElementById("name")
+.value="";
+
+
+document
+.getElementById("price")
+.value="";
+
+
+document
+.getElementById("oldPrice")
+.value="";
+
+
+document
+.getElementById("description")
+.value="";
+
+
+document
+.getElementById("imageFile")
+.value="";
+
+
+document
+.getElementById("preview")
+.src="";
+
+
+document
+.getElementById("preview")
+.style.display="none";
+
+
+document
+.getElementById("formTitle")
+.textContent=
+"➕ Add Product";
+
+
+document
+.getElementById("saveBtn")
+.textContent=
+"➕ Add Product";
+
+
+};
+
+
+/* =========================
+   START
+========================= */
+
+loadProducts();
+
+</script>
+
+</body>
+</html>

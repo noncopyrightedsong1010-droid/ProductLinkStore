@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>Product Details - Product Link</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f7f7f7;
+    color:#222;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:white;
+    box-shadow:0 3px 15px rgba(0,0,0,.08);
+    animation:headerDown .6s ease;
+}
+
+@keyframes headerDown{
+
+    from{
+        transform:translateY(-100%);
+        opacity:0;
+    }
+
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+
+}
+
+.top{
+    width:94%;
+    max-width:1200px;
+    margin:auto;
+    padding:15px 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    color:#ff0080;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.back{
+    border:none;
+    background:#f4f4f4;
+    padding:10px 18px;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.back:hover{
+    background:#ff0080;
+    color:white;
+    transform:translateX(-5px);
+}
+
+
+/* MAIN */
+
+.container{
+    width:94%;
+    max-width:1100px;
+    margin:30px auto;
+}
+
+
+/* PRODUCT */
+
+.product{
+    background:white;
+    border-radius:22px;
+    overflow:hidden;
+    box-shadow:0 8px 35px rgba(0,0,0,.08);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    animation:pageIn .7s ease;
+}
+
+@keyframes pageIn{
+
+    from{
+        opacity:0;
+        transform:translateY(40px) scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
+}
+
+
+/* IMAGE */
+
+.image-area{
+    position:relative;
+    background:#f3f3f3;
+    min-height:500px;
+    overflow:hidden;
+}
+
+.product-image{
+    width:100%;
+    height:100%;
+    min-height:500px;
+    object-fit:cover;
+    transition:transform .7s ease;
+}
+
+.image-area:hover .product-image{
+    transform:scale(1.08);
+}
+
+.discount{
+    position:absolute;
+    top:20px;
+    left:20px;
+    z-index:5;
+    background:#ff0080;
+    color:white;
+    padding:9px 14px;
+    border-radius:8px;
+    font-weight:bold;
+    font-size:14px;
+    animation:badgePop .7s .4s both;
+}
+
+@keyframes badgePop{
+
+    from{
+        opacity:0;
+        transform:scale(0);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+
+/* DETAILS */
+
+.details{
+    padding:40px;
+    animation:detailsIn .8s .15s both;
+}
+
+@keyframes detailsIn{
+
+    from{
+        opacity:0;
+        transform:translateX(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+
+}
+
+.category{
+    color:#888;
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.name{
+    font-size:30px;
+    line-height:1.2;
+    margin-bottom:15px;
+}
+
+.description{
+    color:#666;
+    font-size:15px;
+    line-height:1.6;
+    margin-bottom:22px;
+}
+
+
+/* PRICE */
+
+.price-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:25px;
+}
+
+.price{
+    color:#ff0080;
+    font-size:32px;
+    font-weight:bold;
+    animation:pricePop .8s .5s both;
+}
+
+@keyframes pricePop{
+
+    from{
+        opacity:0;
+        transform:scale(.5);
+    }
+
+    70%{
+        transform:scale(1.12);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+.old-price{
+    color:#999;
+    font-size:16px;
+    text-decoration:line-through;
+}
+
+.save{
+    background:#eafff0;
+    color:#149447;
+    padding:6px 10px;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+
+/* QUANTITY */
+
+.quantity-title{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.qty-btn{
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:50%;
+    background:#f1f1f1;
+    font-size:20px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.qty-btn:hover{
+    background:#ff0080;
+    color:white;
+    transform:scale(1.12);
+}
+
+.qty-number{
+    font-size:18px;
+    font-weight:bold;
+    min-width:25px;
+    text-align:center;
+}
+
+
+/* BUY */
+
+.buy{
+    width:100%;
+    border:none;
+    padding:16px;
+    border-radius:30px;
+    background:linear-gradient(
+        45deg,
+        #ff0080,
+        #ff1493
+    );
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(255,0,128,.25);
+    transition:.3s;
+    animation:buyPulse 2s infinite;
+}
+
+.buy:hover{
+    transform:translateY(-3px) scale(1.02);
+    box-shadow:0 12px 30px rgba(255,0,128,.35);
+}
+
+@keyframes buyPulse{
+
+    0%,100%{
+        box-shadow:0 8px 20px rgba(255,0,128,.25);
+    }
+
+    50%{
+        box-shadow:0 8px 30px rgba(255,0,128,.45);
+    }
+
+}
+
+
+/* FORM */
+
+.form{
+    margin-top:25px;
+    display:none;
+    animation:formIn .5s ease;
+}
+
+@keyframes formIn{
+
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.form h2{
+    margin-bottom:18px;
+}
+
+.input{
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    outline:none;
+    margin-bottom:12px;
+    font-size:14px;
+}
+
+.input:focus{
+    border-color:#ff0080;
+    box-shadow:0 0 0 3px rgba(255,0,128,.08);
+}
+
+.address{
+    min-height:100px;
+    resize:vertical;
+}
+
+
+/* PAYMENT */
+
+.payment{
+    margin-top:10px;
+    width:100%;
+    border:none;
+    padding:15px;
+    border-radius:30px;
+    background:#111;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.payment:hover{
+    background:#ff0080;
+    transform:scale(1.02);
+}
+
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+    .product{
+        grid-template-columns:1fr;
+    }
+
+    .image-area{
+        min-height:350px;
+    }
+
+    .product-image{
+        min-height:350px;
+    }
+
+    .details{
+        padding:25px;
+    }
+
+    .name{
+        font-size:24px;
+    }
+
+    .price{
+        font-size:27px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+<div class="top">
+
+<div class="logo">
+🛍️ Product Link
+</div>
+
+<button
+class="back"
+onclick="goBack()"
+>
+← Back
+</button>
+
+</div>
+
+</header>
+
+
+<main class="container">
+
+
+<div
+id="product"
+class="product"
+>
+
+<div class="image-area">
+
+<span
+id="discount"
+class="discount"
+>
+OFF
+</span>
+
+<img
+id="productImage"
+class="product-image"
+src=""
+alt="Product"
+>
+
+</div>
+
+
+<div class="details">
+
+
+<div
+id="category"
+class="category"
+>
+Category
+</div>
+
+
+<h1
+id="name"
+class="name"
+>
+Product Name
+</h1>
+
+
+<div
+id="description"
+class="description"
+>
+Premium quality product.
+</div>
+
+
+<div class="price-box">
+
+<span
+id="price"
+class="price"
+>
+₹0
+</span>
+
+<span
+id="oldPrice"
+class="old-price"
+>
+₹0
+</span>
+
+<span
+id="save"
+class="save"
+>
+SAVE
+</span>
+
+</div>
+
+
+<div class="quantity-title">
+Quantity
+</div>
+
+
+<div class="quantity">
+
+<button
+class="qty-btn"
+onclick="changeQuantity(-1)"
+>
+−
+</button>
+
+<span
+id="quantity"
+class="qty-number"
+>
+1
+</span>
+
+<button
+class="qty-btn"
+onclick="changeQuantity(1)"
+>
++
+</button>
+
+</div>
+
+
+<button
+class="buy"
+onclick="showForm()"
+>
+🛒 Buy Now
+</button>
+
+
+<div
+id="form"
+class="form"
+>
+
+<h2>
+Customer Details
+</h2>
+
+
+<input
+id="customerName"
+class="input"
+type="text"
+placeholder="👤 Full Name"
+>
+
+
+<input
+id="mobile"
+class="input"
+type="tel"
+placeholder="📱 Mobile Number"
+maxlength="10"
+>
+
+
+<textarea
+id="address"
+class="input address"
+placeholder="📍 Full Delivery Address"
+></textarea>
+
+
+<button
+class="payment"
+onclick="startPayment()"
+>
+💳 Continue to Payment
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+</main>
+
+
+<script>
+
+
+/* ============================
+   GET PRODUCT
+============================ */
+
+const savedProduct =
+localStorage.getItem(
+    "selectedProduct"
+);
+
+
+if(!savedProduct){
+
+    alert("Product not found.");
+
+    window.location.href=
+    "products.html";
+
+}
+
+
+const product =
+JSON.parse(savedProduct);
+
+
+/* ============================
+   SHOW PRODUCT
+============================ */
+
+document
+.getElementById("productImage")
+.src =
+product.image;
+
+
+document
+.getElementById("productImage")
+.onerror=function(){
+
+    this.src=
+    "https://placehold.co/700x700/eeeeee/333333?text=Product";
+
+};
+
+
+document
+.getElementById("name")
+.textContent =
+product.name;
+
+
+document
+.getElementById("category")
+.textContent =
+product.category;
+
+
+document
+.getElementById("description")
+.textContent =
+product.description;
+
+
+document
+.getElementById("price")
+.textContent =
+"₹"+product.price;
+
+
+document
+.getElementById("oldPrice")
+.textContent =
+"₹"+product.oldPrice;
+
+
+document
+.getElementById("discount")
+.textContent =
+product.discount;
+
+
+const saving =
+product.oldPrice-
+product.price;
+
+
+document
+.getElementById("save")
+.textContent =
+"SAVE ₹"+saving;
+
+
+/* ============================
+   QUANTITY
+============================ */
+
+let quantity=1;
+
+
+function changeQuantity(value){
+
+    quantity += value;
+
+    if(quantity<1){
+        quantity=1;
+    }
+
+    if(quantity>10){
+        quantity=10;
+    }
+
+    document
+    .getElementById("quantity")
+    .textContent=quantity;
+
+}
+
+
+/* ============================
+   CUSTOMER FORM
+============================ */
+
+function showForm(){
+
+    const form =
+    document.getElementById("form");
+
+    form.style.display="block";
+
+    setTimeout(
+    function(){
+
+        form.scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
+
+    },100);
+
+}
+
+
+/* ============================
+   PAYMENT
+============================ */
+
+function startPayment(){
+
+    const name =
+    document
+    .getElementById("customerName")
+    .value
+    .trim();
+
+
+    const mobile =
+    document
+    .getElementById("mobile")
+    .value
+    .trim();
+
+
+    const address =
+    document
+    .getElementById("address")
+    .value
+    .trim();
+
+
+    if(!name){
+
+        alert(
+            "Please enter your name."
+        );
+
+        return;
+
+    }
+
+
+    if(!/^[0-9]{10}$/.test(mobile)){
+
+        alert(
+            "Please enter a valid 10 digit mobile number."
+        );
+
+        return;
+
+    }
+
+
+    if(!address){
+
+        alert(
+            "Please enter your delivery address."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Customer order data
+    */
+
+    const order={
+
+        product:product,
+
+        quantity:quantity,
+
+        customerName:name,
+
+        mobile:mobile,
+
+        address:address,
+
+        total:
+        product.price*
+        quantity,
+
+        date:
+        new Date().toISOString()
+
+    };
+
+
+    localStorage.setItem(
+        "customerOrder",
+        JSON.stringify(order)
+    );
+
+
+    /*
+       Payment integration
+       पुढे Razorpay येथे जोडता येईल.
+    */
+
+    alert(
+        "Customer details saved. Payment gateway can be connected here."
+    );
+
+}
+
+
+/* ============================
+   BACK
+============================ */
+
+function goBack(){
+
+    window.history.back();
+
+}
+
+</script>
+
+</body>
+</html>
